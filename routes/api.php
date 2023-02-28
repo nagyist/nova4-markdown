@@ -2,6 +2,21 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\HtmlString;
+use Nagyist\NovaMarkdown\Http\Controllers\MarkdownToolController;
 
-Route::get('changelog', \Orlyapps\NovaChangelog\Http\Controllers\ToolController::class . '@index');
+/*
+|--------------------------------------------------------------------------
+| Tool API Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you may register API routes for your tool. These routes
+| are loaded by the ServiceProvider of your tool. They are protected
+| by your tool's "Authorize" middleware by default. Now, go build!
+|
+*/
+Route::get('index', [MarkdownToolController::class, 'index']);
+/*
+Route::controller(MarkdownToolController::class)->group(function () {
+    Route::get('index',  'index');
+});
+*/

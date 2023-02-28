@@ -1,5 +1,5 @@
 {
-    "name": "orlyapps/nova-changelog",
+    "name": "nagyist/nova-markdown",
     "description": "A Laravel Nova tool.",
     "keywords": [
         "laravel",
@@ -7,18 +7,18 @@
     ],
     "license": "MIT",
     "require": {
-        "php": ">=7.1.0",
+        "php": "^8.1|^8.2",
         "erusev/parsedown": "^1.7"
     },
     "autoload": {
         "psr-4": {
-            "Orlyapps\\NovaChangelog\\": "src/"
+            "Nagyist\\NovaMarkdown\\": "src/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Orlyapps\\NovaChangelog\\ToolServiceProvider"
+              "Nagyist\\NovaMarkdown\\MarkdownToolServiceProvider"
             ]
         }
     },

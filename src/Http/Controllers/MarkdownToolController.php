@@ -1,14 +1,15 @@
 <?php
+declare(strict_types=1);
 
-namespace Orlyapps\NovaChangelog\Http\Controllers;
+namespace Nagyist\NovaMarkdown\Http\Controllers;
 
 use Illuminate\Support\HtmlString;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
-class ToolController extends Controller
+class MarkdownToolController extends Controller
 {
-    public function index()
+    public function index(Request $request): string
     {
         $changelogFile = base_path() . '/CHANGELOG.md';
         if (!file_exists($changelogFile)) {
@@ -17,9 +18,8 @@ class ToolController extends Controller
 
         $changelogMarkdown = file_get_contents($changelogFile);
 
-        $parsedown = new \Parsedown;
-        $html = (string)new HtmlString($parsedown->text($changelogMarkdown));
-
-        return $html;
+        $parseDown = new \Parsedown();
+        $return = (string)new HtmlString($parseDown->text($changelogMarkdown));
+        return $return;
     }
 }

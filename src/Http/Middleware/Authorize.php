@@ -1,20 +1,39 @@
 <?php
+declare(strict_types=1);
 
-namespace Orlyapps\NovaChangelog\Http\Middleware;
+namespace Nagyist\NovaMarkdown\Http\Middleware;
 
-use Orlyapps\NovaChangelog\NovaChangelog;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Http\JsonResponse;
+use Laravel\Nova\Nova;
+use Laravel\Nova\Tool;
+use Nagyist\NovaMarkdown\NovaMarkdown;
 
 class Authorize
 {
     /**
      * Handle the incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param \Closure(Request):mixed $next
+     * @return Response|JsonResponse
      */
-    public function handle($request, $next)
+    public function handle(Request $request, \Closure $next): Response|JsonResponse
     {
-        return resolve(NovaChangelog::class)->authorize($request) ? $next($request) : abort(403);
+        $tool = collect(Nova::registeredTools())->first([$this, 'matchesTool']);
+
+        return optional($tool)->authorize($request) ? $next($request) : abort(403);
+    }
+
+    /**
+     * Determine whether this tool belongs to the package.
+     *
+     * @param  \Laravel\Nova\Tool  $tool
+     * @return bool
+     */
+    public function matchesTool(Tool $tool)
+    {
+        return $tool instanceof NovaMarkdown;
     }
 }
